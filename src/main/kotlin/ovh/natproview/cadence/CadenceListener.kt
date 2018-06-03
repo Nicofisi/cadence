@@ -1,6 +1,5 @@
 package ovh.natproview.cadence
 
-import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.io.File
@@ -27,29 +26,20 @@ object CadenceListener : ListenerAdapter() {
         if (lower.equals("hello world")) { // jeżeli zostanie spełniony warunek, że wysłana wiadomość to "hello world"
             // channel = weź kanał
             // sendMessage(x) = wyślij wiadomość o treści x
-            // .queue() - musi zostac dopisane, aby kod mogl zrobic cos zwiazanego z wiadomsciami
+            // .queue() - musi zostać dopisane, aby kod mógł zrobić coś związanego wiadomościami
             channel.sendMessage("oh hi there").queue()
         }
 
         if (lower.startsWith("say ")) { // jeżeli wiadomość zaczyna się z "say "
-            val text = lower // tekst wiadomosci zapisywany jest do zmiennej text
+            val text = lower // tekst wiadomości zapisywany jest do zmiennej text
             // od zmiennej text zabieramy 4 pierwsze znaki i tworzymy z niej zmienną textToSend
             val textToSend = lower.substring(4)
-            channel.sendMessage(textToSend).queue() //wysylana zostaje nasza wiadomosc bez "say "
+            channel.sendMessage(textToSend).queue() // wysłana zostaje nasza wiadomośc bez "say "
             msg.delete().queue() // nasza oryginalna wiadomosc zostaje usunięta i zostaje tylko ta wyslana przez bota
         }
 
         if (lower.contains("google")) { // jeżeli w tej wiadomości występuje słowo "google"
-            channel.sendFile(File("google.png")).queue() // wyslij na ten kanał plik (logo googla jako obraz)
-
-
+            channel.sendFile(File("google.png")).queue() // wyślij na ten kanał plik (logo googla jako obraz)
         }
-
-
-
-     //   if (lower.toLowerCase().contains("hello cadence")) {
-     //       channel.sendMessage("hi ${author.asMention}, we are talking in ${guild?.name ?: "a DM channel"}").queue()
-     //   }
-
     }
 }
