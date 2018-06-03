@@ -12,9 +12,9 @@ fun main(args: Array<String>) {
             .addEventListener(CadenceListener)
             .buildBlocking()
 
-    val leaveFile = File("leave")
+    val leaveFile = File("leave.txt")
     if (leaveFile.exists()) {
-        val leaveChannelId = File("leave.txt").readText().trim()
+        val leaveChannelId = leaveFile.readText().trim()
         jda.getTextChannelById(leaveChannelId).sendMessage("I'm back on!").queue()
     }
 }
