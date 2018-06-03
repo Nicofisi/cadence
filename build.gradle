@@ -1,0 +1,72 @@
+buildscript {
+    ext.kotlin_version = '1.2.41'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'java' // idk
+    id 'idea' // idk
+    id 'application' // for ./gradlew run
+    id 'com.github.johnrengelman.shadow' version '2.0.1' // for ./gradlew shadowJar
+    id 'com.sedmelluq.jdaction' version "1.0.2" // warns when we forget a .queue() or .complete() or .submit()
+}
+
+apply plugin: 'kotlin' // it doesn't work when in plugins{} for some reason
+
+group 'ovh.natproview'
+version '1.0'
+
+mainClassName = "ovh.natproview.cadence.MainKt"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    // Kotlin itself
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // the Java Discord API library
+    compile "net.dv8tion:JDA:3.6.0_354"
+
+    // a nice JSON library
+    compile "com.beust:klaxon:2.1.14"
+
+    // a library for logging used by JDA
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+        attributes 'Name': name
+        attributes 'Specification-Title': name
+        attributes 'Specification-Version': version
+        attributes 'Specification-Vendor': 'NatProView'
+        attributes 'Implementation-Title': name
+        attributes 'Implementation-Version': version
+        attributes 'Implementation-Vendor': 'NatProView'
+    }
+}
